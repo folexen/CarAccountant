@@ -1,10 +1,7 @@
 package com.caracount;
 
-import com.caracount.view.FuelFrame;
-import com.caracount.view.LoginPanel;
+import com.caracount.view.FramesNames;
 import com.caracount.view.MainFrame;
-import com.caracount.view.ServiceFrame;
-
 import javax.swing.*;
 
 /**
@@ -12,11 +9,8 @@ import javax.swing.*;
  */
 public class Controller {
     private static MainFrame mainFrame;
-    private static FuelFrame fuelFrame;
-    private static ServiceFrame serviceFrame;
-    private static LoginPanel loginPanel;
 
-    public static void initGui() {
+    public static void initGui(FramesNames framesNames) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -28,55 +22,35 @@ public class Controller {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+        String frameName = "";
+        if (framesNames.equals(FramesNames.MainFrame)) frameName = "CAR ACCOUNTANT MAIN WINDOW";
+        if (framesNames.equals(FramesNames.FuelFrame)) frameName = "CAR ACCOUNTANT FUEL TAB";
+        if (framesNames.equals(FramesNames.ServiceFrame)) frameName = "CAR ACCOUNTANT SERVICE";
 
-        mainFrame = new MainFrame("Car Accountant");
-        fuelFrame = new FuelFrame("Fuel consumption and expnces control");
-        serviceFrame = new ServiceFrame("Service expences control window");
-
-        serviceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fuelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame = new MainFrame(frameName, framesNames);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        serviceFrame.setVisible(false);
-        fuelFrame.setVisible(false);
         mainFrame.setVisible(true);
     }
 
-    public static void changeWindowToFuelFrame() {
-        serviceFrame.setVisible(false);
-        fuelFrame.setVisible(true);
-        mainFrame.setVisible(false);
+    public static void selectFuelWindow() {
+        mainFrame.dispose();
+        initGui(FramesNames.FuelFrame);
     }
-    public static void changeWindowToServiceFrame() {
-        serviceFrame.setVisible(true);
-        fuelFrame.setVisible(false);
-        mainFrame.setVisible(false);
+    public static void selectServiceWindow() {
+        mainFrame.dispose();
+        initGui(FramesNames.ServiceFrame);
     }
-    public static void changeWindowToMainFrame() {
-        serviceFrame.setVisible(false);
-        fuelFrame.setVisible(false);
-        mainFrame.setVisible(true);
-    }
-
-    public static void initAppAfterSecuritySection() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                initGui();
-                loginPanel.dispose();
-            }
-        });
+    public static void selectMainWindow() {
+        if (mainFrame != null) mainFrame.dispose();
+        initGui(FramesNames.MainFrame);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                loginPanel = new LoginPanel();
-                loginPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                loginPanel.setVisible(true);
+                selectMainWindow();
             }
         });
-
     }
 }

@@ -1,9 +1,6 @@
 package com.caracount.view;
 
-import com.caracount.listeners.ExitButtonListener;
-import com.caracount.listeners.FuelButtonListener;
-import com.caracount.listeners.MainButtonListener;
-import com.caracount.listeners.ServiceButtonListener;
+import com.caracount.listeners.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,5 +40,21 @@ public class JButtonInitializer {
         mainFrameButton.setToolTipText("Press this button to return to main tab.");
         mainFrameButton.addActionListener(new MainButtonListener());
         return mainFrameButton;
+    }
+
+    static JButton initAndCreateAddFuelDataButton() {
+        JButton addFuelDataButton = new JButton("ADD FUEL DATA");
+        addFuelDataButton.setFont(new Font("Tahoma", Font.BOLD, 8));
+        addFuelDataButton.setToolTipText("Press this button to process this data to local storage.");
+        addFuelDataButton.addActionListener(new AddFuelDataButtonListener());
+        return addFuelDataButton;
+    }
+
+    static JButton initAndCreateAddServiceDataButton() {
+        JButton addServiceDataButton = new JButton("ADD SERVICE DATA");
+        addServiceDataButton.setFont(new Font("Tahoma", Font.BOLD, 8));
+        addServiceDataButton.setToolTipText("Press this button to process this data to local storage.");
+        addServiceDataButton.addActionListener(new AddFuelDataButtonListener());
+        return addServiceDataButton;
     }
 }

@@ -47,7 +47,7 @@ public class ServiceEntryPanel extends AbstractEntryPanel{
         jTextCurrentDate = new JTextField(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), 50);
         jTextServiceOrPartName = new JTextField("", 50);
 
-        JButton addButton = new JButton("Add data");
+        JButton addButton = JButtonInitializer.initAndCreateAddServiceDataButton();
         addButton.addActionListener(new AddServiceDataButtonListener());
 
 
@@ -124,9 +124,5 @@ public class ServiceEntryPanel extends AbstractEntryPanel{
             JOptionPane.showMessageDialog(null, "Something wrong with input data!");
         }
         return new ServiceDao(mileage, isServiceWork, workOrPartName, serviceOrWorkCost, date, null);
-        /*if (mileage != 0 && !isServiceWork  && workOrPartName != null && serviceOrWorkCost != 0.0 && date != null) {
-            return new ServiceDao(mileage, isServiceWork, workOrPartName, serviceOrWorkCost, date, null);
-        }
-        else return null;*/
     }
 }

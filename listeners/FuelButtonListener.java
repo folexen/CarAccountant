@@ -11,6 +11,6 @@ import java.awt.event.ActionListener;
 public class FuelButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        Controller.changeWindowToFuelFrame();
+        Controller.selectFuelWindow();
     }
 }

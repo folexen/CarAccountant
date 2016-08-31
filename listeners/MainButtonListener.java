@@ -11,6 +11,6 @@ import java.awt.event.ActionListener;
 public class MainButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        Controller.changeWindowToMainFrame();
+        Controller.selectMainWindow();
     }
 }

@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 
 /**
@@ -17,9 +15,9 @@ import java.util.HashSet;
 public class ServiceDataStorage implements Serializable{
 
     private static final long serialVersionUID =  991275049;
-    private static HashSet<ServiceDao> serviceDataSet = readServiceDatafromDisk();
+    private static ArrayList<ServiceDao> serviceDataSet = readServiceDatafromDisk();
 
-    public static HashSet<ServiceDao> getServiceDataSet() {
+    public static ArrayList<ServiceDao> getServiceDataSet() {
         return serviceDataSet;
     }
 
@@ -38,23 +36,23 @@ public class ServiceDataStorage implements Serializable{
         try (FileOutputStream fos = new FileOutputStream("src\\com\\caracount\\serializedData\\SerializedServiceData.ser");
              ObjectOutputStream ous = new ObjectOutputStream(fos)) {
             ous.writeObject(serviceDataSet);
-            JOptionPane.showMessageDialog(null, "Done");
+            JOptionPane.showMessageDialog(null, "Data backup to disk succesfull!");
         }
         catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Unable to store data");
+            JOptionPane.showMessageDialog(null, "Data backup corrupted. Possible data loss.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static HashSet<ServiceDao> readServiceDatafromDisk() {
-        HashSet<ServiceDao> result = new HashSet<>();
+    public static ArrayList<ServiceDao> readServiceDatafromDisk() {
+        ArrayList<ServiceDao> result = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream("src\\com\\caracount\\serializedData\\SerializedServiceData.ser");
              ObjectInputStream ois = new ObjectInputStream(fis)) {
-            result = (HashSet) ois.readObject();
-            JOptionPane.showMessageDialog(null, "Done");
+            result = (ArrayList<ServiceDao>) ois.readObject();
+            JOptionPane.showMessageDialog(null, "Data load succesfull");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No data available.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

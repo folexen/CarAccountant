@@ -1,6 +1,7 @@
 package com.caracount.listeners;
 
 import com.caracount.Controller;
+import com.caracount.view.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,6 @@ import java.awt.event.ActionListener;
 public class ServiceButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        Controller.changeWindowToServiceFrame();
+        Controller.selectServiceWindow();
     }
 }

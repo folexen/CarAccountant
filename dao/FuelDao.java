@@ -1,11 +1,14 @@
 package com.caracount.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Flex on 29.08.2016.
  */
-public class FuelDao {
+public class FuelDao implements Serializable, Comparable {
+
+    private static final long serialVersionUID = 1212454536;
     private int carCurrentMileage;
     private Date date;
     private double fuelCost;
@@ -20,6 +23,26 @@ public class FuelDao {
         this.isRefillPartial = isRefillPartial;
     }
 
+    public int getCarCurrentMileage() {
+        return carCurrentMileage;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public double getFuelCost() {
+        return fuelCost;
+    }
+
+    public double getTotalFuelCost() {
+        return totalFuelCost;
+    }
+
+    public boolean isRefillPartial() {
+        return isRefillPartial;
+    }
+
     @Override
     public String toString() {
         return "FuelDao{" +
@@ -29,5 +52,11 @@ public class FuelDao {
                 ", totalFuelCost=" + totalFuelCost +
                 ", isRefillPartial=" + isRefillPartial +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        FuelDao entry = (FuelDao) o;
+        return entry.carCurrentMileage > carCurrentMileage ? 1 : 0;
     }
 }
