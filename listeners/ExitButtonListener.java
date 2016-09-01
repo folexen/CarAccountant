@@ -12,8 +12,6 @@ import java.awt.event.ActionListener;
 public class ExitButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        ServiceDataStorage.writeServiceDatatoDisk(); //temp method invokation. Should be processed further
-        FuelDataStorage.writeFuelDatatoDisk(); //temp method invokation. Should be processed further
         System.exit(1);
     }
 }

@@ -18,6 +18,7 @@ public class AddFuelDataButtonListener implements ActionListener {
         FuelDao fuelDao = FuelEntryPanel.processDataToFuelDao();
         FuelDataStorage.addFuelDatatoFuelStorage(fuelDao);
         JOptionPane.showMessageDialog(null, fuelDao.toString() +"\n" + "data added.");
+        FuelDataStorage.writeFuelDatatoDisk();
         Controller.selectFuelWindow();
     }
 }

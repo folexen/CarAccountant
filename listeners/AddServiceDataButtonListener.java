@@ -1,5 +1,6 @@
 package com.caracount.listeners;
 
+import com.caracount.Controller;
 import com.caracount.dao.ServiceDao;
 import com.caracount.localData.ServiceDataStorage;
 import com.caracount.view.ServiceEntryPanel;
@@ -16,6 +17,8 @@ public class AddServiceDataButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         ServiceDao serviceDao = ServiceEntryPanel.processDataToServiceDao();
         ServiceDataStorage.addServiceDataToServiceStorage(serviceDao);
+        ServiceDataStorage.writeServiceDatatoDisk();
         JOptionPane.showMessageDialog(null, serviceDao.toString() +"\n" + "data added.");
+        Controller.selectServiceWindow();
     }
 }

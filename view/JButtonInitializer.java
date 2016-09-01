@@ -4,57 +4,50 @@ import com.caracount.listeners.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Flex on 29.08.2016.
  */
 public class JButtonInitializer {
 
+    private static Font fontMain = new Font("Courier", Font.BOLD, 10);
+    private static Font fontHelp = new Font("Courier", Font.BOLD, 9);
+
+    static JButton initAndCreateButton(String name, Font font, String toolTipText, ActionListener actionListener) {
+        JButton resultButton = new JButton(name);
+        resultButton.setFont(font);
+        resultButton.setToolTipText(toolTipText);
+        resultButton.addActionListener(actionListener);
+        return resultButton;
+    }
     static JButton initAndCreateExitButton() {
-        JButton exitButton = new JButton("EXIT");
-        exitButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-        exitButton.setToolTipText("Press this button to exit application.");
-        exitButton.addActionListener(new ExitButtonListener());
-        return exitButton;
+        return initAndCreateButton("EXIT", fontMain,
+                "Press this button to exit application.", new ExitButtonListener());
     }
 
     static JButton initAndCreateFuelButton() {
-        JButton fuelButton = new JButton("FUEL EXPENSES TAB");
-        fuelButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-        fuelButton.setToolTipText("Press this button to go to fuel expenses tab.");
-        fuelButton.addActionListener(new FuelButtonListener());
-        return fuelButton;
+        return initAndCreateButton("FUEL EXPENSES TAB", fontMain,
+                "Press this button to go to fuel expenses tab.", new FuelButtonListener());
     }
 
     static JButton initAndCreateServiceButton() {
-        JButton serviceButton = new JButton("SERVICE EXPENSES TAB");
-        serviceButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-        serviceButton.setToolTipText("Press this button to go to service expenses tab.");
-        serviceButton.addActionListener(new ServiceButtonListener());
-        return serviceButton;
+        return initAndCreateButton("SERVICE EXPENSES TAB", fontMain,
+                "Press this button to go to service expenses tab.", new ServiceButtonListener());
     }
 
     static JButton initAndCreateMainFrameButton() {
-        JButton mainFrameButton = new JButton("GOTO MAIN TAB");
-        mainFrameButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-        mainFrameButton.setToolTipText("Press this button to return to main tab.");
-        mainFrameButton.addActionListener(new MainButtonListener());
-        return mainFrameButton;
+        return initAndCreateButton("GOTO MAIN TAB", fontMain,
+                "Press this button to return to main tab.", new MainButtonListener());
     }
 
     static JButton initAndCreateAddFuelDataButton() {
-        JButton addFuelDataButton = new JButton("ADD FUEL DATA");
-        addFuelDataButton.setFont(new Font("Tahoma", Font.BOLD, 8));
-        addFuelDataButton.setToolTipText("Press this button to process this data to local storage.");
-        addFuelDataButton.addActionListener(new AddFuelDataButtonListener());
-        return addFuelDataButton;
+        return initAndCreateButton("ADD FUEL DATA", fontHelp,
+                "Press this button to process this data to local storage.", new AddFuelDataButtonListener());
     }
 
     static JButton initAndCreateAddServiceDataButton() {
-        JButton addServiceDataButton = new JButton("ADD SERVICE DATA");
-        addServiceDataButton.setFont(new Font("Tahoma", Font.BOLD, 8));
-        addServiceDataButton.setToolTipText("Press this button to process this data to local storage.");
-        addServiceDataButton.addActionListener(new AddFuelDataButtonListener());
-        return addServiceDataButton;
+        return initAndCreateButton("ADD SERVICE DATA", fontHelp,
+                "Press this button to process this data to local storage.", new AddServiceDataButtonListener());
     }
 }
