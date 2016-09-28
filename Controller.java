@@ -1,16 +1,21 @@
 package com.caracount;
 
+import com.caracount.view.FontInitializer;
 import com.caracount.view.FramesNames;
 import com.caracount.view.MainFrame;
+import com.caracount.view.RegisterFrame;
+
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Flex on 23.08.2016.
  */
 public class Controller {
     private static MainFrame mainFrame;
+    private static RegisterFrame registerFrame;
 
-    public static void initGui(FramesNames framesNames) {
+    public static void initGui() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -22,34 +27,56 @@ public class Controller {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        String frameName = "";
-        if (framesNames.equals(FramesNames.MainFrame)) frameName = "CAR ACCOUNTANT MAIN WINDOW";
-        if (framesNames.equals(FramesNames.FuelFrame)) frameName = "CAR ACCOUNTANT FUEL TAB";
-        if (framesNames.equals(FramesNames.ServiceFrame)) frameName = "CAR ACCOUNTANT SERVICE";
-
-        mainFrame = new MainFrame(frameName, framesNames);
+        mainFrame = new MainFrame("CAR ACCOUNTANT");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
     }
 
-    public static void selectFuelWindow() {
-        mainFrame.dispose();
-        initGui(FramesNames.FuelFrame);
+    public static void initRegisterFrame() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
+                registerFrame = new RegisterFrame("Register new Car Accountant account.");
+                registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                registerFrame.setVisible(true);
+            }
+        });
     }
-    public static void selectServiceWindow() {
-        mainFrame.dispose();
-        initGui(FramesNames.ServiceFrame);
+
+    public static void cancelRegistration() {
+        registerFrame.dispose();
     }
-    public static void selectMainWindow() {
-        if (mainFrame != null) mainFrame.dispose();
-        initGui(FramesNames.MainFrame);
+
+    public static void tabSwitch(FramesNames framesNames) {
+        mainFrame.disposeGUI();
+        mainFrame.initGui(framesNames);
+    }
+
+    public static void selectLoginWindow() {
+        initGui();
+        mainFrame.initGui(FramesNames.LoginFrame);
+    }
+
+    public static MainFrame getMainFrame() {
+        return mainFrame;
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                selectMainWindow();
+                selectLoginWindow();
             }
         });
     }

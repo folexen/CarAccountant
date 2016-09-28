@@ -4,13 +4,14 @@ import com.caracount.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 /**
- * Created by Flex on 25.08.2016.
+ * Created by Flex on 05.09.2016.
  */
-public class FuelButtonListener implements ActionListener {
+public class RegisterBtnListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        Controller.selectFuelWindow();
+        Controller.initRegisterFrame();
     }
 }

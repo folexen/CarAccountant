@@ -1,26 +1,29 @@
 package com.caracount.view;
 
-import com.caracount.dao.FuelDao;
-import com.caracount.dao.ServiceDao;
-import com.caracount.listeners.AddFuelDataButtonListener;
-
 import javax.swing.*;
 import java.awt.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.function.DoubleToIntFunction;
 
 /**
  * Created by Flex on 25.08.2016.
  */
-//FuelEntryPanel contains basic information on car stored, such as make, model, model year, engine volume. etc
+/* FuelEntryPanel contains gives user ability to enter data
+ * such as mileage (should be Integer value ex. 85170 without
+ * adding km. or miles), cost per liter (should be Float value
+ * without naming currency ex. 23.21), total cost(requirements are
+ * the same as for previous entry), date in format Day(two digits)/
+ * Month(two digits)/Year (four digits), and select complete or
+ * partial refueling.
+ */
+
 public class FuelEntryPanel extends AbstractEntryPanel {
-    private static JTextField jTextFieldMileage;
-    private static JTextField jTextTotalCost;
-    private static JTextField jTextCurrentDate;
-    private static JTextField jTextCostPerLiter;
-    private static JRadioButton completeRefueling;
+
+    private static JTextField mileage;
+    private static JTextField totalCost;
+    private static JTextField date;
+    private static JTextField costPerLiter;
+    private static JRadioButton isRefuelComlete;
 
     public FuelEntryPanel() {
         super("FUEL EXPENSES ENTRY SECTION");
@@ -32,19 +35,27 @@ public class FuelEntryPanel extends AbstractEntryPanel {
         setLayout(new GridBagLayout());
 
         //Creating Swing components
-
         JLabel carMileage = new JLabel("Enter current mileage:");
+        carMileage.setFont(FontInitializer.setJlabelFont());
         JLabel totalCost = new JLabel("Enter total cost of refuel:");
+        totalCost.setFont(FontInitializer.setJlabelFont());
         JLabel currentDate = new JLabel("Current date:");
+        currentDate.setFont(FontInitializer.setJlabelFont());
         JLabel costPerLiter = new JLabel("Cost per liter");
+        costPerLiter.setFont(FontInitializer.setJlabelFont());
+        JLabel refuelType = new JLabel("Refuel type:");
+        refuelType.setFont(FontInitializer.setJlabelFont());
 
-        jTextFieldMileage = new JTextField("", 50);
-        jTextTotalCost = new JTextField("", 50);
-        jTextCurrentDate = new JTextField(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), 50);
-        jTextCostPerLiter = new JTextField("", 50);
+        mileage = new JTextField("", 50);
+        FuelEntryPanel.totalCost = new JTextField("", 50);
+        date = new JTextField(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), 50);
+        FuelEntryPanel.costPerLiter = new JTextField("", 50);
 
         JButton addButton = JButtonInitializer.initAndCreateAddFuelDataButton();
-        completeRefueling = new JRadioButton("Select if refuel was complete");
+        JButton delButton = JButtonInitializer.initAndCreateDeleteFuelButton();
+        isRefuelComlete = new JRadioButton("Select if refuel was complete");
+        isRefuelComlete.setFont(FontInitializer.setJlabelFont());
+        isRefuelComlete.setOpaque(false);
 
 
         //Adding Swing components to content pane
@@ -53,8 +64,9 @@ public class FuelEntryPanel extends AbstractEntryPanel {
 
         gc.weightx = 0.5;
         gc.weighty = 0.5;
+        gc.insets = new Insets(3, 3, 3, 3);
 
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.anchor = GridBagConstraints.LINE_END;
         gc.gridx = 0;
         gc.gridy = 0;
         this.add(carMileage, gc);
@@ -71,53 +83,66 @@ public class FuelEntryPanel extends AbstractEntryPanel {
         gc.gridy = 3;
         this.add(costPerLiter, gc);
 
+        gc.gridx = 0;
+        gc.gridy = 4;
+        this.add(refuelType, gc);
+
+        gc.fill = GridBagConstraints.BOTH;
+        gc.ipady = 10;
         gc.gridx = 1;
         gc.gridy = 0;
-        this.add(jTextFieldMileage, gc);
+        this.add(mileage, gc);
 
         gc.gridx = 1;
         gc.gridy = 1;
-        this.add(jTextTotalCost, gc);
+        this.add(FuelEntryPanel.totalCost, gc);
 
         gc.gridx = 1;
         gc.gridy = 2;
-        this.add(jTextCurrentDate, gc);
+        this.add(date, gc);
 
         gc.gridx = 1;
         gc.gridy = 3;
-        this.add(jTextCostPerLiter, gc);
+        this.add(FuelEntryPanel.costPerLiter, gc);
 
-        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
         gc.gridx = 0;
-        gc.gridy = 4;
-        gc.ipady = 30;
+        gc.gridy = 5;
+        gc.ipady = 15;
+        gc.ipadx = 30;
         add(addButton, gc);
 
-
+        gc.anchor = GridBagConstraints.LINE_START;
         gc.gridx = 1;
         gc.gridy = 4;
         gc.ipady = 30;
-        add(completeRefueling, gc);
+        add(isRefuelComlete, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 5;
+        gc.ipady = 15;
+        gc.ipadx = 30;
+        add(delButton, gc);
     }
 
-    public static FuelDao processDataToFuelDao() {
-        int mileage = 0;
-        boolean isRefuelPartial = false;
-        double costPerLiter = 0.0;
-        double totalCost = 0.0;
-        Date date = null;
-        try {
-            mileage = Integer.parseInt(jTextFieldMileage.getText());
-            isRefuelPartial = !completeRefueling.isSelected();
-            costPerLiter = Double.parseDouble(jTextCostPerLiter.getText());
-            totalCost = Double.parseDouble(jTextTotalCost.getText());
-            date = new SimpleDateFormat("dd/MM/yyyy").parse(jTextCurrentDate.getText());
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, "Wrong date format. Reenter data please.");
-        }
-        catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Something wrong with input data!");
-        }
-        return new FuelDao(mileage, date, costPerLiter, totalCost, isRefuelPartial);
+    public static JTextField getMileage() {
+        return mileage;
+    }
+
+    public static JTextField getTotalCost() {
+        return totalCost;
+    }
+
+    public static JTextField getDate() {
+        return date;
+    }
+
+    public static JTextField getCostPerLiter() {
+        return costPerLiter;
+    }
+
+    public static JRadioButton getIsRefuelComlete() {
+        return isRefuelComlete;
     }
 }

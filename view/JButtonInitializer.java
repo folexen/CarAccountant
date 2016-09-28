@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
  */
 public class JButtonInitializer {
 
-    private static Font fontMain = new Font("Courier", Font.BOLD, 10);
-    private static Font fontHelp = new Font("Courier", Font.BOLD, 9);
+    private static Font fontMain = FontInitializer.setMainButtonFont();
+    private static Font fontHelp = FontInitializer.setSecondaryButtonFont();
 
     static JButton initAndCreateButton(String name, Font font, String toolTipText, ActionListener actionListener) {
         JButton resultButton = new JButton(name);
@@ -23,31 +23,62 @@ public class JButtonInitializer {
     }
     static JButton initAndCreateExitButton() {
         return initAndCreateButton("EXIT", fontMain,
-                "Press this button to exit application.", new ExitButtonListener());
+                "Press this button to exit application.", new ExitBtnListener());
+    }
+
+    static JButton initAndCreateOKButton() {
+        return initAndCreateButton("OK", fontMain,
+                "Press this button to confirm login and password entry.", new OkBtnListener());
     }
 
     static JButton initAndCreateFuelButton() {
         return initAndCreateButton("FUEL EXPENSES TAB", fontMain,
-                "Press this button to go to fuel expenses tab.", new FuelButtonListener());
+                "Press this button to go to fuel expenses tab.", new FuelBtnListener());
     }
 
     static JButton initAndCreateServiceButton() {
         return initAndCreateButton("SERVICE EXPENSES TAB", fontMain,
-                "Press this button to go to service expenses tab.", new ServiceButtonListener());
+                "Press this button to go to service expenses tab.", new ServiceBtnListener());
     }
 
     static JButton initAndCreateMainFrameButton() {
         return initAndCreateButton("GOTO MAIN TAB", fontMain,
-                "Press this button to return to main tab.", new MainButtonListener());
+                "Press this button to return to main tab.", new MainBtnListener());
     }
 
     static JButton initAndCreateAddFuelDataButton() {
         return initAndCreateButton("ADD FUEL DATA", fontHelp,
-                "Press this button to process this data to local storage.", new AddFuelDataButtonListener());
+                "Press this button to process this data to local storage.", new AddFuelBtnListener());
     }
 
     static JButton initAndCreateAddServiceDataButton() {
         return initAndCreateButton("ADD SERVICE DATA", fontHelp,
-                "Press this button to process this data to local storage.", new AddServiceDataButtonListener());
+                "Press this button to process this data to local storage.", new AddServiceBtnListener());
+    }
+
+    static JButton initAndCreateRegisterButton() {
+        return initAndCreateButton("Register", fontHelp,
+                "Press this button to create new account.", new RegisterBtnListener());
+    }
+
+    static JButton initAndCreateDeleteSrvcButton() {
+        return initAndCreateButton("Delete", fontHelp,
+                "Press this button to delete selected row.", new DelServiceBtnListener());
+    }
+
+    static JButton initAndCreateDeleteFuelButton() {
+        return initAndCreateButton("Delete", fontHelp,
+                "Press this button to delete selected row.", new DelFuelBtnListener());
+    }
+
+    static JButton initAndCreateConfirmButton() {
+        return initAndCreateButton("Confirm", fontHelp,
+                "Press this button to confirm your new login and password.", new ConfirmRegBtnListener());
+    }
+
+    static JButton initAndCreateCancelButton() {
+        return initAndCreateButton("Cancel", fontHelp,
+                "Press this button cancel changes " + "\n" +
+                        "and return back to login screen.", new CancelRegBtnListener());
     }
 }
