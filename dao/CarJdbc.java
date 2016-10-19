@@ -1,15 +1,14 @@
 package com.caracount.dao;
 
-import com.caracount.localData.FuelData;
+import com.caracount.model.Helper;
 import com.caracount.util.DbConnection;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Flex on 08.09.2016.
- */
 public class CarJdbc {
 
     public static List<Car> getCars(int ID) {
@@ -46,4 +45,24 @@ public class CarJdbc {
         }
         return resultList;
     }
+
+   public static void addCarToDb(Car car) {
+       Connection connection = DbConnection.createConnectionToLocalDb();
+       try {
+           Statement statement= connection.createStatement();
+           statement.executeUpdate(String.format("insert into car_info (vin_code, make, model, year, engine, fuel)\n" +
+                   "\tvalues ('%s', (select  ID from car_makes where make = '%s'), \n" +
+                   "    (select ID from car_models where model = '%s'), '%d',  %f, \n" +
+                   "    (select ID from fuel_type where type = '%s'));\n" +
+                   "\tinsert into account_info (account_id, vin_code, account_active, start_date)\n" +
+                   "\tvalues((select ID from accounts where login='%s'), \n" +
+                   "    (select vin_code from car_info where vin_code='%s'), %d, '%s');",
+                   car.getVIN(), car.getMake(), car.getModel(), car.getYear(), car.getEngineVolume(), car.getFuel(),
+                   LoginDaoJdbc.getLogin(), car.getVIN(), 1, new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
+           statement.close();
+           connection.close();
+       } catch (SQLException e) {
+           Helper.showErrorMessage("Error encounterd while inserting information.");
+       }
+   }
 }

@@ -10,21 +10,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
-/**
- * Created by Flex on 30.08.2016.
- */
-public class ServiceData implements Serializable{
+public class ServiceData implements Serializable {
 
-    private static final long serialVersionUID =  991275049;
-
-    public static void setServicesList(ArrayList<ServiceExpenses> servicesList) {
-        ServiceData.servicesList = servicesList;
-    }
-
+    private static final long serialVersionUID = 991275049;
     private static ArrayList<ServiceExpenses> servicesList = readServiceDatafromDisk();
 
     public static ArrayList<ServiceExpenses> getServicesList() {
         return servicesList;
+    }
+
+    public static void setServicesList(ArrayList<ServiceExpenses> servicesList) {
+        ServiceData.servicesList = servicesList;
     }
 
     public static void addServiceDataToServiceStorage(ServiceExpenses serviceExpenses) {
@@ -42,8 +38,7 @@ public class ServiceData implements Serializable{
         try (FileOutputStream fos = new FileOutputStream(String.format("src\\com\\caracount\\serializedData\\%s\\SerializedServiceData.ser", LoginPanel.getLogin()));
              ObjectOutputStream ous = new ObjectOutputStream(fos)) {
             ous.writeObject(servicesList);
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Application was unable to store data.", "File not found!", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,17 +53,10 @@ public class ServiceData implements Serializable{
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "No data available localy.");
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public static void main(String[] args) {
-        for (ServiceExpenses serviceExpenses: readServiceDatafromDisk()) {
-            System.out.println(serviceExpenses.toString());
-        }
-    }
 }

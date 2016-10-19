@@ -4,9 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Flex on 13.09.2016.
- */
 @Entity
 @Table(name = "fuel_expenses")
 public class FuelExpenses implements Serializable, Comparable{

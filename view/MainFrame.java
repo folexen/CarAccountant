@@ -23,22 +23,23 @@ public class MainFrame extends JFrame {
     private JButton serviceButton;
     private JButton exitButton;
 
-    private JTable averageData;
     private JTable serviceTable;
     private JTable fuelTable;
 
 
     private JScrollPane fuelScrollPane;
     private JScrollPane serivceScrollPane;
-    private JScrollPane averageDataScrollPane;
+    private CarStatisticPanel carStatisticPanel;
 
-    public MainFrame(String title/*, FramesNames frameType*/) throws HeadlessException {
+    public MainFrame(String title) throws HeadlessException {
         super(title);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize);
+        Dimension frameSize = getPreferredSize();
+        frameSize.height = screenSize.height - 20;
+        frameSize.width = screenSize.width - 10;
+        setPreferredSize(frameSize);
         setContentPane(new JLabel(LayoutInitializer.createScaledImageIcon("resources/Background.jpg", "Background")));
         this.getRootPane().setBorder(BorderFactory.createEtchedBorder(20, Color.DARK_GRAY, Color.LIGHT_GRAY));
-        //initGui(frameType);
     }
 
     public void initGui(FramesNames framesNames) {
@@ -59,23 +60,11 @@ public class MainFrame extends JFrame {
         // identic view for all frames.
         if (framesNames.equals(FramesNames.MainFrame)) {
             //initializing components needed for Main Frame
-           carInfoPanel = new CarInfoPanel();
-
-            //temporary fill of averageData table
-            String Overall = String.valueOf(Model.getAverageFuelConsumption(Model.getSelectedVin()).get("OVERALL"));
-            String Last = String.valueOf(Model.getAverageFuelConsumption(Model.getSelectedVin()).get("LAST"));
-            String[] columns = {"#", "Info type", "Value", "Unit"};
-            String[][] data = {{"2", "Average consumption (last) ", Last, "l/100km"},
-                    {"3", "Average consumption (overall)", Overall, "l/100km"},
-                    {"4", "ServiceExpenses costs (month)", "1052", "grn"}};
-
-            averageData = new JTable(data, columns);
-            averageData.setEnabled(false);
-            averageData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-            averageDataScrollPane = new JScrollPane(averageData);
+            carInfoPanel = new CarInfoPanel();
+            carStatisticPanel = new CarStatisticPanel();
             //creating standart layout.
             LayoutInitializer.initializeStandardLayout(this, carInfoPanel, fuelButton,
-                    serviceButton, exitButton, averageDataScrollPane);
+                    serviceButton, exitButton, carStatisticPanel);
         }
         else if (framesNames.equals(FramesNames.FuelFrame)) {
             //initializing components needed for Fuel Frame.
@@ -138,13 +127,12 @@ public class MainFrame extends JFrame {
         if (serviceButton != null) this.remove(serviceButton);
         if (exitButton != null) this.remove(exitButton);
 
-        if (averageData != null) this.remove(averageData);
+        if (carStatisticPanel != null) this.remove(carStatisticPanel);
         if (serviceTable != null) this.remove(serviceTable);
         if (fuelTable != null) this.remove(fuelTable);
 
         if (fuelScrollPane != null) this.remove(fuelScrollPane);
         if (serivceScrollPane != null) this.remove(serivceScrollPane);
-        if (averageDataScrollPane != null) this.remove(averageDataScrollPane);
     }
 }
 

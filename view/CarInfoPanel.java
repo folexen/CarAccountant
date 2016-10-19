@@ -8,23 +8,18 @@ import com.caracount.model.Model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-/**
- * Created by Flex on 25.08.2016.
- */
 //This class contains basic information on car stored, such as make, model, model year, engine volume. etc
 class CarInfoPanel extends AbstractEntryPanel {
-    private JComboBox carVin1;
+    private JComboBox carVin;
 
     public String getVIN() {
         return Model.getSelectedVin();
     }
 
     private void setVIN() {
-        if (carVin1 != null) {
-            Model.setSelectedVin((String)carVin1.getSelectedItem());
+        if (carVin != null) {
+            Model.setSelectedVin((String) carVin.getSelectedItem());
         }
     }
 
@@ -41,35 +36,23 @@ class CarInfoPanel extends AbstractEntryPanel {
         ImageIcon icon = LayoutInitializer.createImageIcon("resources/CarIcon.jpg", "Temporary Description");
         JLabel carIconLabel = new JLabel(icon, JLabel.CENTER);
 
-        JLabel carMake = new JLabel("Make:");
-        carMake.setFont(FontInitializer.setJlabelFont());
-        JLabel carModel = new JLabel("Model:");
-        carModel.setFont(FontInitializer.setJlabelFont());
-        JLabel carVin = new JLabel("VIN:");
-        carVin.setFont(FontInitializer.setJlabelFont());
-        JLabel carModelYear = new JLabel("Model Year:");
-        carModelYear.setFont(FontInitializer.setJlabelFont());
-        JLabel carCurrentMileage = new JLabel("Mileage:");
-        carCurrentMileage.setFont(FontInitializer.setJlabelFont());
+        JLabel carMake = LayoutInitializer.getjLabel("Make:");
+        JLabel carModel = LayoutInitializer.getjLabel("Model:");
+        JLabel vinLabel = LayoutInitializer.getjLabel("VIN:");
+        JLabel carModelYear = LayoutInitializer.getjLabel("Model Year:");
+        JLabel carCurrentMileage = LayoutInitializer.getjLabel("Mileage:");
 
-        JLabel carMake1 = new JLabel(this.getCarFromList(getVIN()).getMake());
-        carMake1.setFont(FontInitializer.setJlabelFont());
-        JLabel carModel1 = new JLabel(this.getCarFromList(getVIN()).getModel());
-        carModel1.setFont(FontInitializer.setJlabelFont());
-        carVin1 = new JComboBox(Model.getAllVins());
-        carVin1.setSelectedItem(getVIN());
-        carVin1.setFont(FontInitializer.setJlabelFont());
-        carVin1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                setVIN();
-                Controller.tabSwitch(FramesNames.MainFrame);
-            }
+        JLabel carMake1 = LayoutInitializer.getjLabel(this.getCarFromList(getVIN()).getMake());
+        JLabel carModel1 = LayoutInitializer.getjLabel(this.getCarFromList(getVIN()).getModel());
+        carVin = new JComboBox(Model.getAllVins());
+        carVin.setSelectedItem(getVIN());
+        carVin.setFont(FontInitializer.setJlabelFont());
+        carVin.addActionListener(actionEvent -> {
+            setVIN();
+            Controller.tabSwitch(FramesNames.MainFrame);
         });
-        JLabel carModelYear1 = new JLabel(String.valueOf(this.getCarFromList(getVIN()).getYear()));
-        carModelYear1.setFont(FontInitializer.setJlabelFont());
-        JLabel carCurrentMileage1 = new JLabel(String.valueOf(this.getCarFromList(getVIN()).getMileage()));
-        carCurrentMileage1.setFont(FontInitializer.setJlabelFont());
+        JLabel carModelYear1 = LayoutInitializer.getjLabel(String.valueOf(this.getCarFromList(getVIN()).getYear()));
+        JLabel carCurrentMileage1 = LayoutInitializer.getjLabel(String.valueOf(this.getCarFromList(getVIN()).getMileage()));
 
 
 
@@ -98,7 +81,7 @@ class CarInfoPanel extends AbstractEntryPanel {
 
         gc.gridx = 1;
         gc.gridy = 2;
-        this.add(carVin, gc);
+        this.add(vinLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 3;
@@ -119,7 +102,7 @@ class CarInfoPanel extends AbstractEntryPanel {
 
         gc.gridx = 2;
         gc.gridy = 2;
-        this.add(carVin1, gc);
+        this.add(carVin, gc);
 
         gc.gridx = 2;
         gc.gridy = 3;

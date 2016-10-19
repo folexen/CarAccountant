@@ -3,10 +3,8 @@ package com.caracount.dao;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
-/**
- * Created by Flex on 26.08.2016.
- */
 @Entity
 @Table(name = "service_expenses")
 public class ServiceExpenses implements Serializable, Comparable {
@@ -112,7 +110,7 @@ public class ServiceExpenses implements Serializable, Comparable {
     @Override
     public String toString() {
         String isServiceTypeWorkString;
-        if (isServiceTypeWork)  isServiceTypeWorkString = "Work";
+        if (isServiceTypeWork) isServiceTypeWorkString = "Work";
         else isServiceTypeWorkString = "Spare Part";
         return "Following entry:" + "\n" +
                 "Mileage: " + mileage + "\n" +
@@ -126,8 +124,8 @@ public class ServiceExpenses implements Serializable, Comparable {
     @Override
     public int compareTo(Object o) {
         ServiceExpenses entry = (ServiceExpenses) o;
-        if (getMileage() == entry.getMileage()) {
-            return (int)(getDate().getTime() - entry.getDate().getTime());
+        if (Objects.equals(getMileage(), entry.getMileage())) {
+            return (int) (getDate().getTime() - entry.getDate().getTime());
         }
         return this.getMileage() - entry.getMileage();
     }

@@ -1,8 +1,5 @@
 package com.caracount.dao;
 
-/**
- * Created by Flex on 19.09.2016.
- */
 public class DaoFactory {
     private static DaoFactory instance = null;
     private FuelExpensesDaoImpl fuelExpensesDao = null;

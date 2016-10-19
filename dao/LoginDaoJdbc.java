@@ -1,5 +1,6 @@
 package com.caracount.dao;
 
+import com.caracount.model.Helper;
 import com.caracount.util.DbConnection;
 import com.caracount.view.LoginPanel;
 
@@ -10,12 +11,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
-/**
- * Created by Flex on 06.09.2016.
- */
 public class LoginDaoJdbc {
 
     private static int ID;
+    private static String login;
+
+    static String getLogin() {
+        return login;
+    }
+
+    private static void setLogin(String login) {
+        LoginDaoJdbc.login = login;
+    }
 
     //Method providing ID and password check from car database.
     public static boolean checkLoginPassword() {
@@ -25,7 +32,8 @@ public class LoginDaoJdbc {
             ResultSet resultSet = statement.executeQuery(String.format("SELECT ID, login, password FROM accounts " +
                     "WHERE login = '%s'", LoginPanel.getLogin()));
             while (resultSet.next()) {
-                if (Arrays.equals (resultSet.getString("password").toCharArray(), LoginPanel.getPassword())) {
+                if (Arrays.equals(resultSet.getString("password").toCharArray(), LoginPanel.getPassword())) {
+                    setLogin(LoginPanel.getLogin());
                     ID = resultSet.getInt("ID");
                     connection.close();
                     statement.close();
@@ -35,8 +43,7 @@ public class LoginDaoJdbc {
             connection.close();
             statement.close();
             resultSet.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -51,9 +58,8 @@ public class LoginDaoJdbc {
             JOptionPane.showMessageDialog(null, "Your login and password has been added successfully.");
             statement.close();
             connection.close();
-        }
-        catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "User login already exists, please select another one.");
+        } catch (SQLException e) {
+            Helper.showErrorMessage("User login already exists, please select another one.");
         }
     }
 

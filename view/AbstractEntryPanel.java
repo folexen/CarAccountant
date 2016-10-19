@@ -6,16 +6,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-/**
- * Created by Flex on 30.08.2016.
- */
-public abstract class AbstractEntryPanel extends JPanel {
+abstract class AbstractEntryPanel extends JPanel {
 
-    public AbstractEntryPanel(String panelTitle) {
+    AbstractEntryPanel(String panelTitle) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension panelSize = getPreferredSize();
-        panelSize.height = (int)(size.height*0.4);
-        panelSize.width = size.width;
+        panelSize.height = (int) (size.height * 0.4);
+        panelSize.width = size.width - 3;
         setPreferredSize(panelSize);
         Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         TitledBorder border = BorderFactory.createTitledBorder(etchedBorder, panelTitle);

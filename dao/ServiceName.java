@@ -2,12 +2,10 @@ package com.caracount.dao;
 
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Flex on 22.09.2016.
- */
 @Entity
 @Table(name = "service_name")
 public class ServiceName implements Serializable{
@@ -26,7 +24,7 @@ public class ServiceName implements Serializable{
     public ServiceName() {
     }
 
-    public Integer getID() {
+    private Integer getID() {
         return ID;
     }
 

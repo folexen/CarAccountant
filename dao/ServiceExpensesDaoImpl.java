@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Flex on 20.09.2016.
- */
 public class ServiceExpensesDaoImpl implements ServiceExpensesDao{
 
     private static void sessionClose(Session session) {

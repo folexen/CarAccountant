@@ -35,16 +35,11 @@ public class FuelEntryPanel extends AbstractEntryPanel {
         setLayout(new GridBagLayout());
 
         //Creating Swing components
-        JLabel carMileage = new JLabel("Enter current mileage:");
-        carMileage.setFont(FontInitializer.setJlabelFont());
-        JLabel totalCost = new JLabel("Enter total cost of refuel:");
-        totalCost.setFont(FontInitializer.setJlabelFont());
-        JLabel currentDate = new JLabel("Current date:");
-        currentDate.setFont(FontInitializer.setJlabelFont());
-        JLabel costPerLiter = new JLabel("Cost per liter");
-        costPerLiter.setFont(FontInitializer.setJlabelFont());
-        JLabel refuelType = new JLabel("Refuel type:");
-        refuelType.setFont(FontInitializer.setJlabelFont());
+        JLabel carMileage = LayoutInitializer.getjLabel("Enter current mileage:");
+        JLabel totalCost = LayoutInitializer.getjLabel("Enter total cost of refuel:");
+        JLabel currentDate = LayoutInitializer.getjLabel("Current date:");
+        JLabel costPerLiter = LayoutInitializer.getjLabel("Cost per liter");
+        JLabel refuelType = LayoutInitializer.getjLabel("Refuel type:");
 
         mileage = new JTextField("", 50);
         FuelEntryPanel.totalCost = new JTextField("", 50);

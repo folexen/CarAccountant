@@ -1,8 +1,5 @@
 package com.caracount.dao;
 
-/**
- * Created by Flex on 08.09.2016.
- */
 public class Car {
     private String VIN;
     private String make;

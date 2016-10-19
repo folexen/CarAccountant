@@ -9,21 +9,17 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-/**
- * Created by Flex on 15.09.2016.
- */
 public class FuelExpensesDaoImpl implements FuelExpensesDao {
 
     @Override
     public Collection getFuelExpenses(String VIN) {
-        List fuel = new ArrayList<FuelExpenses>();
+        List<FuelExpenses> fuel = new ArrayList<>();
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query query = session.createQuery("from FuelExpenses where vinId = :vin_id ").setString("vin_id", VIN);
-            fuel = (List<FuelExpenses>)query.list();
+            fuel = (List<FuelExpenses>)query.list();//Checkout uncheked cast warning!!!
             session.getTransaction().commit();        }
         catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error", "Error in process of getting all fuel data",
@@ -72,7 +68,6 @@ public class FuelExpensesDaoImpl implements FuelExpensesDao {
         }
         catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error", "Deletion Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
         }
         finally {
             sessionClose(session);

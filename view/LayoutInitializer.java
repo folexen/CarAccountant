@@ -18,7 +18,7 @@ public class LayoutInitializer {
 
     public static void initializeStandardLayout(JFrame jFrame, JPanel jPanel,
                                                 JButton jButton1, JButton jButton2,
-                                                JButton jButton3, JScrollPane jScrollPane) {
+                                                JButton jButton3, JComponent jScrollPane) {
         jPanel.setOpaque(false);
         jScrollPane.setOpaque(false);
 
@@ -66,5 +66,11 @@ public class LayoutInitializer {
         Image image = createImageIcon(path, description).getImage();
         return new ImageIcon(image.getScaledInstance(Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height, Image.SCALE_SMOOTH), description);
+    }
+
+    public static JLabel getjLabel(String text) {
+        JLabel jLabel = new JLabel(text);
+        jLabel.setFont(FontInitializer.setJlabelFont());
+        return jLabel;
     }
 }
